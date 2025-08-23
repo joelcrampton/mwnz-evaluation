@@ -3,7 +3,7 @@ import { getCompanyById } from '../services/companyService';
 
 const router = Router();
 
-// Generic using :id
+// GET endpoint to fetch a company using a generic :id.
 router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
 

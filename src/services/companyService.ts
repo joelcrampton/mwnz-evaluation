@@ -4,7 +4,13 @@ import { Company } from '../types/index';
 
 const BASE_URL = 'https://raw.githubusercontent.com/MiddlewareNewZealand/evaluation-instructions/main/xml-api';
 
-export async function getCompanyById(id: string): Promise<Company> {
+/**
+ * Get a Company using the given id.
+ *
+ * @param id - The id.
+ * @returns The Company
+ */
+async function getCompanyById(id: string): Promise<Company> {
   const url = `${BASE_URL}/${id}.xml`;
   const response = await axios.get(url, { responseType: 'text' });
   
@@ -17,3 +23,5 @@ export async function getCompanyById(id: string): Promise<Company> {
     description: data.description[0]
   };
 }
+
+export default getCompanyById;
