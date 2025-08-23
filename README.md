@@ -34,7 +34,7 @@ This is a simple API (middleware) that connects to a static XML API and parses i
     - https://raw.githubusercontent.com/MiddlewareNewZealand/evaluation-instructions/main/xml-api was used as the base URL followed by `/{:id}.xml`. This allowed me to pull out a generic `id` from the request parameters, connect to the static XML API using `axios` and return the raw XML
     - I also implemented error handling as per the [supplied OpenAPI specification](https://github.com/MiddlewareNewZealand/evaluation-instructions/blob/main/openapi-companies.yaml)
 5. But, we needed the response to be in JSON format, not XML. So I searched for libraries that might help me to parse XML into JSON. I found `xml2js` which had a helpful `parseStringPromise()` method to do just that
-6. Now, I had completed the task to connect to the static XML API and parse it into a JSON response. But I still needed to test it as per the instructions. After a quick search, `jest` looked like a good library to use for testing. I implemented it and wrote some tests, but they would not work. At this point all my API logic was in one file. When I imported it into the test file, the Node.js server would start and prevent me from accessing the methods I wanted to test
+6. Now, I had completed the task to connect to the static XML API and parse it into a JSON response. But I still needed to test it as per the instructions. After a quick search, `jest` looked like a good library to use for testing. I implemented it and wrote some tests, but they would not work. At this point all my API logic was in one file. My guess is that when I imported it into the test file, the Node.js server would start and prevent me from accessing the methods I wanted to test
 7. To solve this I split up that file using improved architecture. I had to do this so that the running server was separate from the logic I wanted to test. After some searching for what is standard practice, I landed with the following architecture:
     - `app.ts` creates the Express.js `app` and defines the route (endpoint) to use
     - `server.ts` starts the Node.js server on the Express.js app
@@ -43,6 +43,14 @@ This is a simple API (middleware) that connects to a static XML API and parses i
     - `types/index.ts` an interface to define the JSON body for a company. Used as a type in the TypeScript
     - `tests/test.ts` the `jest` tests
 8. The simple API was now running and tested! I cleaned up the code, added some documentation and that was that
+
+## :thought_balloon: Considerations for deploying to a production environment
+- In `package.json` I defined a `start` script to use the compiled JavaScript code in `dist/`. This makes execution faster
+- For deploying to production, the experience I have is with AWS. I would:
+    - Create a Docker image of my API code
+    - Push the image to ECR
+    - Use a CloudFormation template to define an ECS Cluster and an ECS Task definition for that container
+    - Deploy the CloudFormation template
 
 ## :repeat: Things I would do differently
 - Everything was implemented using the `feature/api` branch. I should have broken the task down into smaller chunks e.g. `feature/tutorial`, `feature/xml2js` and `feature/test`
