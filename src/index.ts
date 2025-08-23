@@ -1,5 +1,6 @@
 import axios from 'axios';
 import express, { Request, Response } from 'express';
+import { parseStringPromise } from 'xml2js';
 
 const app = express();
 const PORT = 8080;
@@ -36,8 +37,16 @@ app.get('/v1/companies/:id', async (req: Request, res: Response) => {
   }
 });
 
-async function getCompanyById(id: string): Promise<string> {
+async function getCompanyById(id: string): Promise<any> {
   const url = `${BASE_URL}/${id}.xml`;
   const response = await axios.get(url, { responseType: 'text' });
-  return response.data;
+  
+  const json = await parseStringPromise(response.data);
+  const data = json.Data;
+
+  return {
+    id: parseInt(data.id[0]),
+    name: data.name[0],
+    description: data.description[0]
+  };
 }
