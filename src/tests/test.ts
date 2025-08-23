@@ -3,7 +3,8 @@ import { getCompanyById } from '../services/companyService';
 describe('Server', () => {
   // Valid test for getCompanyById
   it('should fetch and parse company with ID 1', async () => {
-    const company = await getCompanyById('1');
+    const id = '1';
+    const company = await getCompanyById(id);
     expect(company).toEqual({
       id: 1,
       name: 'MWNZ',
@@ -13,6 +14,7 @@ describe('Server', () => {
 
   // Invalid test for getCompanyById
   it('should throw for invalid company ID', async () => {
-    await expect(getCompanyById('invalid')).rejects.toThrow();
+    const id = 'invalid';
+    await expect(getCompanyById(id)).rejects.toThrow();
   });
 });
