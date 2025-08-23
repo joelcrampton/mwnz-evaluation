@@ -12,9 +12,6 @@ app.listen(
   () => console.log(`Server running on http://localhost:8080`)
 )
 
-// Middleware!
-app.use( express.json() )
-
 // Generic using :id
 app.get('/v1/companies/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
