@@ -38,18 +38,18 @@ This is a simple API (middleware) that connects to a static XML API and parses i
 7. To solve this I split up that file using improved architecture. I had to do this so that the running server was separate from the logic I wanted to test. After some searching for what is standard practice, I landed with the following architecture:
     - `app.ts` creates the Express.js `app` and defines the route (endpoint) to use
     - `server.ts` starts the Node.js server on the Express.js app
-    - `routes/companies.ts` the GET route (endpoint)
-    - `services/companyService.ts` the service used in the GET route to request the raw XML for a company and parse it into a JSON response
+    - `routes/companies.ts` the `GET` route (endpoint)
+    - `services/companyService.ts` the service used in the `GET` route to request the raw XML for a company and parse it into a JSON response
     - `types/index.ts` an interface to define the JSON body for a company. Used as a type in the TypeScript
     - `tests/test.ts` the `jest` tests
 8. The simple API was now running and tested! I cleaned up the code, added some documentation and that was that
 
 ## :thought_balloon: Considerations for deploying to a production environment
 - In `package.json` I defined a `start` script to use the compiled JavaScript code in `dist/`. This makes execution faster
-- For deploying to production, the experience I have is with AWS. I would:
+- For deploying to production, the experience I have is with AWS using ECS. I would:
     - Create a Docker image of my API code
     - Push the image to ECR
-    - Use a CloudFormation template to define an ECS Cluster and an ECS Task definition for that container
+    - Use a CloudFormation template to define an ECS Cluster and an ECS Task definition for the container
     - Deploy the CloudFormation template
 
 ## :repeat: Things I would do differently
