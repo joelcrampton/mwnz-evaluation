@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "start": "ts-node --esm src/server.ts",
+    "start": "ts-node src/server.ts",
     "build": "tsc",
     "prod": "node dist/index.js",
     "test": "jest"
@@ -16,7 +16,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/joelcrampton/mwnz-evaluation/issues"
   },

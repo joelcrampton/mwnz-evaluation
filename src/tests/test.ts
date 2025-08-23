@@ -1,4 +1,4 @@
-const getCompanyById = require('../server');
+import { getCompanyById } from '../services/companyService';
 
 describe('Server', () => {
   it('should fetch and parse company with ID 1', async () => {
