@@ -31,25 +31,25 @@ This is a simple API (middleware) that connects to a static XML API and parses i
     - In this evaluation, we are developing custom middleware to instead parse XML data in the request body and convert it to a JSON response
 3. I refactored the `GET` endpoint from the simple API to return the raw XML for this evalutation
     - Search results pointed me towards `axios`, which is a library I used to make requests to the external static XML API
-    - https://raw.githubusercontent.com/MiddlewareNewZealand/evaluation-instructions/main/xml-api was used as the base URL followed by `/{:id}.xml`. This allowed me to pull out a generic `id` from the request parameters, connect to the static XML API using `axios` and return the raw XML
+    - `https://raw.githubusercontent.com/MiddlewareNewZealand/evaluation-instructions/main/xml-api` was used as the base URL followed by `/{:id}.xml`. This allowed me to pull out a generic `id` from the request parameters, connect to the static XML API using `axios` and return the raw XML
     - I also implemented error handling as per the [supplied OpenAPI specification](https://github.com/MiddlewareNewZealand/evaluation-instructions/blob/main/openapi-companies.yaml)
 5. But, we needed the response to be in JSON format, not XML. So I searched for libraries that might help me to parse XML into JSON. I found `xml2js` which had a helpful `parseStringPromise()` method to do just that
 6. Now, I had completed the task to connect to the static XML API and parse it into a JSON response. But I still needed to test it as per the instructions. After a quick search, `jest` looked like a good library to use for testing. I implemented it and wrote some tests, but they would not work. At this point all my API logic was in one file. My guess is that when I imported it into the test file, the Node.js server would start and prevent me from accessing the methods I wanted to test
 7. To solve this I split up that file using improved architecture. I had to do this so that the running server was separate from the logic I wanted to test. After some searching for what is standard practice, I landed with the following architecture:
     - `app.ts` creates the Express.js `app` and defines the route (endpoint) to use
     - `server.ts` starts the Node.js server on the Express.js app
-    - `routes/companies.ts` the GET route (endpoint)
-    - `services/companyService.ts` the service used in the GET route to request the raw XML for a company and parse it into a JSON response
+    - `routes/companies.ts` the `GET` route (endpoint)
+    - `services/companyService.ts` the service used in the `GET` route to request the raw XML for a company and parse it into a JSON response
     - `types/index.ts` an interface to define the JSON body for a company. Used as a type in the TypeScript
     - `tests/test.ts` the `jest` tests
 8. The simple API was now running and tested! I cleaned up the code, added some documentation and that was that
 
 ## :thought_balloon: Considerations for deploying to a production environment
 - In `package.json` I defined a `start` script to use the compiled JavaScript code in `dist/`. This makes execution faster
-- For deploying to production, the experience I have is with AWS. I would:
+- For deploying to production, the bits of experience I have is with AWS using ECS. I would:
     - Create a Docker image of my API code
     - Push the image to ECR
-    - Use a CloudFormation template to define an ECS Cluster and an ECS Task definition for that container
+    - Use a CloudFormation template to define an ECS Cluster and an ECS Task definition for the container
     - Deploy the CloudFormation template
 
 ## :repeat: Things I would do differently
