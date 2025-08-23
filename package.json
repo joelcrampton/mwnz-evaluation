@@ -1,7 +1,6 @@
 {
   "name": "mwnz-evaluation",
   "version": "1.0.0",
-  "description": "",
   "main": "src/server.ts",
   "scripts": {
     "start": "ts-node src/server.ts",
@@ -9,18 +8,7 @@
     "prod": "node dist/index.js",
     "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joelcrampton/mwnz-evaluation.git"
-  },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/joelcrampton/mwnz-evaluation/issues"
-  },
-  "homepage": "https://github.com/joelcrampton/mwnz-evaluation#readme",
   "dependencies": {
     "axios": "^1.11.0",
     "express": "^5.1.0",

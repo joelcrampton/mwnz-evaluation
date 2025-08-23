@@ -1,4 +1,4 @@
-import getCompanyById from '../services/companyService';
+import { getCompanyById } from '../services/companyService';
 
 describe('Server', () => {
   // Valid test for getCompanyById

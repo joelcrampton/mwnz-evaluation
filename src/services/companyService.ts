@@ -10,7 +10,7 @@ const BASE_URL = 'https://raw.githubusercontent.com/MiddlewareNewZealand/evaluat
  * @param id - The id.
  * @returns The Company
  */
-async function getCompanyById(id: string): Promise<Company> {
+export async function getCompanyById(id: string): Promise<Company> {
   const url = `${BASE_URL}/${id}.xml`;
   const response = await axios.get(url, { responseType: 'text' });
   
@@ -23,5 +23,3 @@ async function getCompanyById(id: string): Promise<Company> {
     description: data.description[0]
   };
 }
-
-export default getCompanyById;
