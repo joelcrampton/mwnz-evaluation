@@ -1,7 +1,9 @@
-import axios from 'axios';
-import express, { Request, Response } from 'express';
-import { parseStringPromise } from 'xml2js';
-import { Company } from './types/index.js';
+import type { Request, Response } from 'express';
+import type { Company } from './types/index';
+
+const axios = require('axios');
+const express = require('express');
+const { parseStringPromise } = require('xml2js');
 
 const app = express();
 const PORT = 8080;
@@ -34,7 +36,7 @@ app.get('/v1/companies/:id', async (req: Request, res: Response) => {
   }
 });
 
-async function getCompanyById(id: string): Promise<Company> {
+export async function getCompanyById(id: string): Promise<Company> {
   const url = `${BASE_URL}/${id}.xml`;
   const response = await axios.get(url, { responseType: 'text' });
   
