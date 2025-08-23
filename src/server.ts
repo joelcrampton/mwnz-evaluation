@@ -1,6 +1,7 @@
 import axios from 'axios';
 import express, { Request, Response } from 'express';
 import { parseStringPromise } from 'xml2js';
+import { Company } from './types/index.js';
 
 const app = express();
 const PORT = 8080;
@@ -20,8 +21,7 @@ app.get('/v1/companies/:id', async (req: Request, res: Response) => {
 
   try {
     const company = await getCompanyById(id!); // ! = non-null assertion
-    res.set('Content-Type', 'application/xml');
-    res.send(company);
+    res.json(company);
   } catch (error: any) {
     if (error.response?.status === 404) {
       res.status(404).json({
@@ -37,7 +37,7 @@ app.get('/v1/companies/:id', async (req: Request, res: Response) => {
   }
 });
 
-async function getCompanyById(id: string): Promise<any> {
+async function getCompanyById(id: string): Promise<Company> {
   const url = `${BASE_URL}/${id}.xml`;
   const response = await axios.get(url, { responseType: 'text' });
   
