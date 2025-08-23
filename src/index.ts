@@ -13,6 +13,7 @@ app.listen(
 // Middleware!
 app.use( express.json() )
 
+// Generic using :id
 app.get('/v1/companies/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
 
@@ -33,22 +34,6 @@ app.get('/v1/companies/:id', async (req: Request, res: Response) => {
       });
     }
   }
-});
-
-// Generic endpoint using :id
-app.post('/tshirt/:id', (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { logo } = req.body;
-
-  if (!logo) {
-    res.status(418).send({
-      message: 'We need a logo!'
-    })
-  }
-
-  res.send({
-    tshirt: `👕 with your ${logo} and ID of ${id}`
-  })
 });
 
 async function getCompanyById(id: string): Promise<string> {
