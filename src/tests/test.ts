@@ -13,6 +13,6 @@ describe('Server', () => {
 
   // Invalid test for getCompanyById
   it('should throw for invalid company ID', async () => {
-    await expect(getCompanyById('3')).rejects.toThrow();
+    await expect(getCompanyById('invalid')).rejects.toThrow();
   });
 });
