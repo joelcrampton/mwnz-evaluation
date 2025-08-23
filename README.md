@@ -46,7 +46,7 @@ This is a simple API (middleware) that connects to a static XML API and parses i
 
 ## :thought_balloon: Considerations for deploying to a production environment
 - In `package.json` I defined a `start` script to use the compiled JavaScript code in `dist/`. This makes execution faster
-- For deploying to production, the experience I have is with AWS using ECS. I would:
+- For deploying to production, the bits of experience I have is with AWS using ECS. I would:
     - Create a Docker image of my API code
     - Push the image to ECR
     - Use a CloudFormation template to define an ECS Cluster and an ECS Task definition for the container
