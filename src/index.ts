@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
+import axios from 'axios';
+import express, { Request, Response } from 'express';
 
-const express = require('express');
 const app = express();
 const PORT = 8080;
+const BASE_URL = 'https://raw.githubusercontent.com/MiddlewareNewZealand/evaluation-instructions/main/xml-api';
 
 app.listen(
   PORT,
@@ -12,11 +13,26 @@ app.listen(
 // Middleware!
 app.use( express.json() )
 
-app.get('/tshirt', (req: Request, res: Response) => {
-  res.status(200).send({
-    tshirt: '👕',
-    size: 'large'
-  })
+app.get('/v1/companies/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const company = await getCompanyById(id!); // ! = non-null assertion
+    res.set('Content-Type', 'application/xml');
+    res.send(company);
+  } catch (error: any) {
+    if (error.response?.status === 404) {
+      res.status(404).json({
+        error: 'Not Found',
+        error_description: `Company with ID ${id} not found`
+      });
+    } else {
+      res.status(500).json({
+        error: 'Internal Server Error',
+        error_description: error.message
+      });
+    }
+  }
 });
 
 // Generic endpoint using :id
@@ -34,3 +50,9 @@ app.post('/tshirt/:id', (req: Request, res: Response) => {
     tshirt: `👕 with your ${logo} and ID of ${id}`
   })
 });
+
+async function getCompanyById(id: string): Promise<string> {
+  const url = `${BASE_URL}/${id}.xml`;
+  const response = await axios.get(url, { responseType: 'text' });
+  return response.data;
+}
