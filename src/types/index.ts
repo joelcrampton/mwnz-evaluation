@@ -1,4 +1,6 @@
-// Company JSON
+/**
+ * Company JSON.
+ */
 export interface Company {
   id: number;
   name: string;
