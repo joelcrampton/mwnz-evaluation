@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 const express = require('express');
 const app = express();
 const PORT = 8080;
@@ -10,7 +12,7 @@ app.listen(
 // Middleware!
 app.use( express.json() )
 
-app.get('/tshirt', (req, res) => {
+app.get('/tshirt', (req: Request, res: Response) => {
   res.status(200).send({
     tshirt: '👕',
     size: 'large'
@@ -18,7 +20,7 @@ app.get('/tshirt', (req, res) => {
 });
 
 // Generic endpoint using :id
-app.post('/tshirt/:id', (req, res) => {
+app.post('/tshirt/:id', (req: Request, res: Response) => {
   const { id } = req.params;
   const { logo } = req.body;
 
